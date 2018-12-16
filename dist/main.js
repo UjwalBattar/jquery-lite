@@ -86,14 +86,25 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/dom_node_collection.js":
+/*!************************************!*\
+  !*** ./src/dom_node_collection.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("class DOMNodeCollection {\n    constructor(nodes) {\n        this.nodes = nodes;\n    }\n\n    each(callback) {\n        this.nodes.forEach(callback);\n    }\n\n    html(html) {\n        if (typeof html === \"string\") {\n            this.each((node) => {\n                node.innerHTML = html;\n            });\n        } else if (this.nodes.length) {\n            return this.nodes[0].innerHTML;\n        }\n    }\n}\n\nmodule.exports = DOMNodeCollection;\n\n//# sourceURL=webpack:///./src/dom_node_collection.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("window.$l = () => {\n\n};\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection */ \"./src/dom_node_collection.js\");\n\nconst $l = function (args) {\n    switch (typeof args) {\n        case \"string\":\n            return Array.prototype.slice.call(document.querySelectorAll(args));\n        case \"object\":\n            if (args instanceof HTMLElement) {\n                return new DOMNodeCollection([args]);\n            }\n    }\n};\n\nwindow.$l = $l;\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
